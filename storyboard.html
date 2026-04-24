@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>विदाई से मिलन की तड़प — Storyboard</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #1a1208; }
+    ::-webkit-scrollbar { height: 6px; width: 6px; }
+    ::-webkit-scrollbar-track { background: #1a1208; }
+    ::-webkit-scrollbar-thumb { background: #5a3e1b; border-radius: 3px; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState } = React;
+
+    const scenes = [
+      {
+        id: 1,
+        time: "0:00 – 0:02",
+        label: "OPENING",
+        hindi: "मैं तुमसे मिलती रहती हूँ",
+        english: "I keep meeting you…",
+        visual: "Slow fade in from black. Soft diffused morning light through sheer curtains. An empty wooden chair by a window. A folded letter rests on it, unread.",
+        camera: "Static wide shot → slow push in toward the chair",
+        color: "#f5e6c8",
+        mood: "Stillness / Waiting",
+        music: "Silence, then a single sitar note fades in",
+        textStyle: "Fade-in cursive, bottom center",
+        icon: "🌅",
+      },
+      {
+        id: 2,
+        time: "0:02 – 0:04",
+        label: "MEMORY",
+        hindi: "रागों के स्वर सुनहरे पड़े हैं",
+        english: "…in every melody that's gone quiet.",
+        visual: "Close-up of a woman's hands gently turning the pages of an old diary. Dried rose petals fall from between the pages.",
+        camera: "Extreme close-up, shallow depth of field. Petals in slow motion.",
+        color: "#e8d5b0",
+        mood: "Nostalgia / Tenderness",
+        music: "Sitar melody begins — slow, melancholic alaap",
+        textStyle: "Thin white text, fades in with petals falling",
+        icon: "📖",
+      },
+      {
+        id: 3,
+        time: "0:04 – 0:05",
+        label: "LONGING",
+        hindi: "कल्पना को साकार बनाओ तुम",
+        english: "Come — give life to what I've only imagined.",
+        visual: "Face in profile, eyes closed, standing near the window. Light wraps half her face in gold. A single tear catches the light.",
+        camera: "Medium close-up, profile. Golden hour lighting.",
+        color: "#d4a96a",
+        mood: "Ache / Yearning",
+        music: "A second instrument (cello or sarangi) joins — tension builds",
+        textStyle: "Bold centered text, slow pulse animation",
+        icon: "✨",
+      },
+      {
+        id: 4,
+        time: "0:05 – 0:07",
+        label: "RESTLESSNESS",
+        hindi: "कैसे समझाऊँ मन को",
+        english: "How do I explain this restless heart…",
+        visual: "Hands pressed to chest. Rapid cut to footsteps pacing on a wooden floor. Wind blows curtains open violently — chaos for 1 second.",
+        camera: "Quick cuts. Handheld, slightly shaky — feeling of unrest.",
+        color: "#c0956f",
+        mood: "Unrest / Breaking point",
+        music: "Music swells — tempo increases slightly. Urgent.",
+        textStyle: "Fragmented text appears in pieces, assembles itself",
+        icon: "💔",
+      },
+      {
+        id: 5,
+        time: "0:07 – 0:09",
+        label: "HOPE",
+        hindi: "आ जाओ तुम",
+        english: "Just come back to me.",
+        visual: "A silhouette appears at the far end of a corridor, backlit in warm amber. She turns. Silhouette begins walking closer. Warm golden light floods frame.",
+        camera: "Wide shot → slow zoom in as silhouette approaches",
+        color: "#e8a44a",
+        mood: "Anticipation / Release",
+        music: "Full crescendo — sitar, cello, tabla join in harmony",
+        textStyle: "Large, bold, centered — 'आ जाओ तुम' in Hindi, then English below",
+        icon: "🌟",
+      },
+      {
+        id: 6,
+        time: "0:09 – 0:10",
+        label: "CLOSE",
+        hindi: "आ जाओ तुम…",
+        english: "Come back to me…",
+        visual: "FREEZE FRAME on silhouette mid-step. Frame slowly desaturates to warm sepia. Poem title appears. Fade to black.",
+        camera: "Freeze → slow fade out",
+        color: "#8b6340",
+        mood: "Longing unresolved — poetic pause",
+        music: "Music cuts to single sitar note — echoes into silence",
+        textStyle: "Title card: 'विदाई से मिलन की तड़प' | Thin serif font, centered",
+        icon: "🎬",
+      },
+    ];
+
+    const musicTimeline = [
+      { time: "0:00", cue: "Silence" },
+      { time: "0:01", cue: "Single sitar note (D♭)" },
+      { time: "0:02", cue: "Slow alaap begins — melancholic" },
+      { time: "0:04", cue: "Sarangi/cello enters — emotional tension" },
+      { time: "0:06", cue: "Tempo lifts — tabla joins quietly" },
+      { time: "0:07", cue: "Full crescendo — all instruments" },
+      { time: "0:09", cue: "Sudden cut to single note" },
+      { time: "0:10", cue: "Silence / echo fade" },
+    ];
+
+    function Storyboard() {
+      const [active, setActive] = useState(0);
+      const scene = scenes[active];
+
+      return (
+        <div style={{
+          fontFamily: "'Georgia', serif",
+          background: "#1a1208",
+          minHeight: "100vh",
+          color: "#f0e0c0",
+          padding: "0",
+          overflowX: "hidden",
+        }}>
+          {/* Header */}
+          <div style={{
+            background: "linear-gradient(135deg, #2d1f0a 0%, #1a1208 100%)",
+            borderBottom: "1px solid #5a3e1b",
+            padding: "24px 32px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            gap: "12px",
+          }}>
+            <div>
+              <div style={{ fontSize: "11px", letterSpacing: "4px", color: "#c0956f", textTransform: "uppercase", marginBottom: "4px" }}>
+                Instagram / YouTube Shorts
+              </div>
+              <h1 style={{ margin: 0, fontSize: "22px", fontWeight: "normal", color: "#f5e0b0" }}>
+                विदाई से मिलन की तड़प
+              </h1>
+              <div style={{ fontSize: "13px", color: "#9a7a50", marginTop: "2px" }}>
+                The Longing to Meet After Farewell — 10 Second Reel Storyboard
+              </div>
+            </div>
+            <div style={{
+              background: "#c0956f22",
+              border: "1px solid #c0956f55",
+              borderRadius: "8px",
+              padding: "8px 16px",
+              fontSize: "12px",
+              color: "#c0956f",
+              textAlign: "center",
+            }}>
+              <div style={{ fontSize: "20px", fontWeight: "bold" }}>10</div>
+              <div>seconds</div>
+              <div style={{ marginTop: "2px", opacity: 0.7 }}>6 scenes</div>
+            </div>
+          </div>
+
+          {/* Scene Selector */}
+          <div style={{
+            display: "flex",
+            gap: "8px",
+            padding: "20px 32px",
+            overflowX: "auto",
+            borderBottom: "1px solid #2a1f0f",
+          }}>
+            {scenes.map((s, i) => (
+              <button
+                key={s.id}
+                onClick={() => setActive(i)}
+                style={{
+                  background: active === i ? s.color : "#2d1f0a",
+                  border: active === i ? `2px solid ${s.color}` : "2px solid #3a2810",
+                  borderRadius: "10px",
+                  padding: "10px 16px",
+                  cursor: "pointer",
+                  color: active === i ? "#1a1208" : "#9a7a50",
+                  fontFamily: "Georgia, serif",
+                  fontSize: "12px",
+                  minWidth: "90px",
+                  textAlign: "center",
+                  transition: "all 0.2s",
+                  flexShrink: 0,
+                }}
+              >
+                <div style={{ fontSize: "18px" }}>{s.icon}</div>
+                <div style={{ fontWeight: "bold", marginTop: "2px" }}>{s.time}</div>
+                <div style={{ fontSize: "10px", marginTop: "2px", letterSpacing: "1px", textTransform: "uppercase" }}>{s.label}</div>
+              </button>
+            ))}
+          </div>
+
+          {/* Main Scene View */}
+          <div style={{ padding: "28px 32px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
+
+            {/* Visual Frame */}
+            <div style={{
+              background: `linear-gradient(160deg, ${scene.color}33 0%, #1a1208 100%)`,
+              border: `1px solid ${scene.color}55`,
+              borderRadius: "16px",
+              padding: "28px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "16px",
+            }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span style={{ fontSize: "10px", letterSpacing: "3px", color: scene.color, textTransform: "uppercase" }}>
+                  Scene {scene.id} · {scene.time}
+                </span>
+                <span style={{ fontSize: "24px" }}>{scene.icon}</span>
+              </div>
+
+              {/* Simulated phone frame */}
+              <div style={{
+                background: "#0d0a05",
+                borderRadius: "20px",
+                border: `2px solid ${scene.color}44`,
+                aspectRatio: "9/16",
+                maxHeight: "220px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "flex-end",
+                padding: "16px",
+                position: "relative",
+                overflow: "hidden",
+              }}>
+                <div style={{
+                  position: "absolute",
+                  inset: 0,
+                  background: `radial-gradient(ellipse at 50% 30%, ${scene.color}22 0%, transparent 70%)`,
+                }} />
+                <div style={{
+                  textAlign: "center",
+                  zIndex: 1,
+                  padding: "8px",
+                  background: "#00000055",
+                  borderRadius: "8px",
+                  backdropFilter: "blur(4px)",
+                }}>
+                  <div style={{ fontSize: "13px", color: "#f5e6c8", fontStyle: "italic", marginBottom: "4px" }}>
+                    {scene.hindi}
+                  </div>
+                  <div style={{ fontSize: "11px", color: scene.color }}>
+                    {scene.english}
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div style={{ fontSize: "10px", color: "#6a5030", letterSpacing: "2px", textTransform: "uppercase", marginBottom: "6px" }}>Mood</div>
+                <div style={{
+                  background: `${scene.color}22`,
+                  border: `1px solid ${scene.color}44`,
+                  borderRadius: "6px",
+                  padding: "8px 12px",
+                  fontSize: "13px",
+                  color: scene.color,
+                }}>
+                  {scene.mood}
+                </div>
+              </div>
+            </div>
+
+            {/* Details Panel */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+              {[
+                { label: "🎥 Visual Direction", value: scene.visual },
+                { label: "📷 Camera", value: scene.camera },
+                { label: "🎵 Music Cue", value: scene.music },
+                { label: "✍️ Text on Screen", value: scene.textStyle },
+              ].map(({ label, value }) => (
+                <div key={label} style={{
+                  background: "#2a1a08",
+                  border: "1px solid #3a2810",
+                  borderRadius: "12px",
+                  padding: "14px 16px",
+                }}>
+                  <div style={{ fontSize: "10px", letterSpacing: "2px", color: "#7a5a30", textTransform: "uppercase", marginBottom: "6px" }}>
+                    {label}
+                  </div>
+                  <div style={{ fontSize: "13px", color: "#d4b88a", lineHeight: "1.6" }}>
+                    {value}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Music Timeline */}
+          <div style={{ padding: "0 32px 32px" }}>
+            <div style={{
+              background: "#20140a",
+              border: "1px solid #3a2810",
+              borderRadius: "16px",
+              padding: "20px 24px",
+            }}>
+              <div style={{ fontSize: "11px", letterSpacing: "3px", color: "#c0956f", textTransform: "uppercase", marginBottom: "16px" }}>
+                🎵 Full Music Timeline
+              </div>
+              <div style={{ display: "flex", gap: "0", overflowX: "auto", position: "relative" }}>
+                <div style={{
+                  position: "absolute",
+                  top: "18px",
+                  left: "24px",
+                  right: "24px",
+                  height: "2px",
+                  background: "linear-gradient(to right, #c0956f, #e8a44a, #c0956f)",
+                  opacity: 0.4,
+                }} />
+                {musicTimeline.map((m, i) => (
+                  <div key={i} style={{
+                    flex: "1",
+                    minWidth: "80px",
+                    textAlign: "center",
+                    position: "relative",
+                    padding: "0 4px",
+                  }}>
+                    <div style={{
+                      width: "12px",
+                      height: "12px",
+                      borderRadius: "50%",
+                      background: "#c0956f",
+                      border: "2px solid #e8a44a",
+                      margin: "0 auto 8px",
+                      position: "relative",
+                      zIndex: 1,
+                    }} />
+                    <div style={{ fontSize: "10px", color: "#c0956f", marginBottom: "4px", fontWeight: "bold" }}>{m.time}</div>
+                    <div style={{ fontSize: "10px", color: "#7a5a30", lineHeight: "1.4" }}>{m.cue}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Production Notes */}
+          <div style={{ padding: "0 32px 40px", display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "14px" }}>
+            {[
+              { title: "🎬 Format", lines: ["Aspect Ratio: 9:16 vertical", "Resolution: 1080 × 1920", "Frame Rate: 24fps (cinematic)", "Duration: 10 seconds exact"] },
+              { title: "🎭 Tone & Style", lines: ["Soft golden hour palette", "Slow motion + freeze frames", "Minimal cuts — 6 total", "Poetic, literary feel"] },
+              { title: "📱 Platform Tips", lines: ["Add subtitles in both languages", "Use 'No Copyright Hindi Music'", "Post at 7–9 PM IST", "Tag: #HindiPoetry #FeelIt"] },
+            ].map(({ title, lines }) => (
+              <div key={title} style={{
+                background: "#20140a",
+                border: "1px solid #3a2810",
+                borderRadius: "12px",
+                padding: "16px",
+              }}>
+                <div style={{ fontSize: "11px", color: "#c0956f", marginBottom: "10px", letterSpacing: "1px" }}>{title}</div>
+                {lines.map((l, i) => (
+                  <div key={i} style={{ fontSize: "12px", color: "#8a6a40", marginBottom: "5px", paddingLeft: "10px", borderLeft: "2px solid #3a2810" }}>
+                    {l}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<Storyboard />);
+  </script>
+</body>
+</html>
